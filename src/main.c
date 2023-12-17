@@ -14,7 +14,7 @@ static const char *TAG = "Coin Rotator Main";
 
 #define SERVO_PULSE_GPIO 23                  // GPIO connected to signal line of servo
 #define SERVO_TIMEBASE_RESOLUTION_HZ 1000000 // 1 MHz, 1 us per tick
-#define SERVO_TIMEBASE_PERIOD 20000          // 20000 ticks, 20 ms per period
+#define SERVO_TIMEBASE_PERIOD 50000          // 50000 ticks, 50 ms per period
 
 static inline uint32_t middle_pulsewidth_us()
 {
@@ -26,20 +26,23 @@ static inline uint32_t step_through_duty_cycles(int step)
     return SERVO_MIN_PULSEWIDTH_US + (SERVO_MAX_PULSEWIDTH_US - SERVO_MIN_PULSEWIDTH_US) * step / 8;
 }
 
-static inline uint32_t rotate_display(bool is_clockwise)
+void rotate_display(mcpwm_cmpr_handle_t comparator, bool is_clockwise)
 {
-    return is_clockwise ? (middle_pulsewidth_us() + SERVO_MAX_PULSEWIDTH_US) / 2 : (SERVO_MIN_PULSEWIDTH_US + middle_pulsewidth_us()) / 2;
+    const uint32_t smooth_offset = 40;
+    const uint32_t rotation_magnitude = is_clockwise ? middle_pulsewidth_us() + smooth_offset : SERVO_MIN_PULSEWIDTH_US + smooth_offset;
+    ESP_ERROR_CHECK(mcpwm_comparator_set_compare_value(comparator, rotation_magnitude));
 }
 
-void step_continuosly(mcpwm_cmpr_handle_t comparator)
+// Helper function to find suitable duty cycle for rotation
+void step_through_pwms_testing_helper(mcpwm_cmpr_handle_t comparator)
 {
     while (true)
     {
         ESP_LOGI(TAG, "Top of rotation loop");
-        for (int step = 0; step < 9; step++)
+        for (int step = 0; step < 30; step++)
         {
-            ESP_ERROR_CHECK(mcpwm_comparator_set_compare_value(comparator, step_through_duty_cycles(step)));
-            vTaskDelay(pdMS_TO_TICKS(500));
+            ESP_ERROR_CHECK(mcpwm_comparator_set_compare_value(comparator, middle_pulsewidth_us() + 80 / 3 * step));
+            vTaskDelay(pdMS_TO_TICKS(3000));
         }
     }
 }
@@ -96,5 +99,6 @@ void app_main(void)
     ESP_ERROR_CHECK(mcpwm_timer_enable(timer));
     ESP_ERROR_CHECK(mcpwm_timer_start_stop(timer, MCPWM_TIMER_START_NO_STOP));
 
-    rotate_display(true);
+    const bool is_clockwise = true;
+    rotate_display(comparator, is_clockwise);
 }
