@@ -21,7 +21,7 @@ This repository contains the source code and design schematics for an open-sourc
 
 ## File Structure
 - `/src`: Contains the C source code for the ESP32.
-- `/schematics`: Includes the 3d printing files (TODO)
+- `/schematics`: Includes the 3d printing files
 
 ## Setup and Installation
 1. **Printing:** Follow the schematics in `/schematics` to print the necessary components.
@@ -38,6 +38,6 @@ Open source under the MIT [license](LICENSE).
 Useful Resources:
 - [ESP32 Pinout](https://lastminuteengineers.com/esp32-pinout-reference/) *for my specific devkit*
 - [ESP-IDF Motor Control Pulse Width Modulation API](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/peripherals/mcpwm.html)
-- [FS90R datasheet](https://uc9ea36c79113d8ff24263e91b0c.dl.dropboxusercontent.com/cd/0/inline2/CJesNNeaPnM648lrUDMDQ4TBVc-hHVdfaVPwca9G8n9qp-Vwd6h_-5wMJ4UhxcXRXoW3EzcoDQwmkwabecfPx1WrCwZBLK2bVRfSu6sNvMybq-dzN_GRty_VFOhaQWF7Zyex7bHOXSFwsuNRJgyfQY5ZdaM8hEwFaPzax-cpnzKXusAEH4NT8gwThN7Kk8v4TGKPuqODiyRssHoUn_uGTNi0iKewPd9Bn7i_6PWMhnLnd3IPjEyOCjuG5SjPeLMSQCqLbXNid8ZHZpZKar9PI47RIPWewnO166WHfrLrvaHZDxp8G8stgVxdDkP7AviioGidXfUn-lOLLF410M7dtAgrX6pCEaZZyi1JJwEJOO3zCw/file) unfortunately, these pop up and dissapear quite easily
+- [FS90R datasheet](https://uc9ea36c79113d8ff24263e91b0c.dl.dropboxusercontent.com/cd/0/inline2/CJesNNeaPnM648lrUDMDQ4TBVc-hHVdfaVPwca9G8n9qp-Vwd6h_-5wMJ4UhxcXRXoW3EzcoDQwmkwabecfPx1WrCwZBLK2bVRfSu6sNvMybq-dzN_GRty_VFOhaQWF7Zyex7bHOXSFwsuNRJgyfQY5ZdaM8hEwFaPzax-cpnzKXusAEH4NT8gwThN7Kk8v4TGKPuqODiyRssHoUn_uGTNi0iKewPd9Bn7i_6PWMhnLnd3IPjEyOCjuG5SjPeLMSQCqLbXNid8ZHZpZKar9PI47RIPWewnO166WHfrLrvaHZDxp8G8stgVxdDkP7AviioGidXfUn-lOLLF410M7dtAgrX6pCEaZZyi1JJwEJOO3zCw/file) unfortunately, these pop up and disappear quite easily
 
 Enjoy your Open Source Coin Rotator!

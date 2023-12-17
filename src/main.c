@@ -26,6 +26,24 @@ static inline uint32_t step_through_duty_cycles(int step)
     return SERVO_MIN_PULSEWIDTH_US + (SERVO_MAX_PULSEWIDTH_US - SERVO_MIN_PULSEWIDTH_US) * step / 8;
 }
 
+static inline uint32_t rotate_display(bool is_clockwise)
+{
+    return is_clockwise ? (middle_pulsewidth_us() + SERVO_MAX_PULSEWIDTH_US) / 2 : (SERVO_MIN_PULSEWIDTH_US + middle_pulsewidth_us()) / 2;
+}
+
+void step_continuosly(mcpwm_cmpr_handle_t comparator)
+{
+    while (true)
+    {
+        ESP_LOGI(TAG, "Top of rotation loop");
+        for (int step = 0; step < 9; step++)
+        {
+            ESP_ERROR_CHECK(mcpwm_comparator_set_compare_value(comparator, step_through_duty_cycles(step)));
+            vTaskDelay(pdMS_TO_TICKS(500));
+        }
+    }
+}
+
 void app_main(void)
 {
     ESP_LOGI(TAG, "Start main()");
@@ -78,13 +96,5 @@ void app_main(void)
     ESP_ERROR_CHECK(mcpwm_timer_enable(timer));
     ESP_ERROR_CHECK(mcpwm_timer_start_stop(timer, MCPWM_TIMER_START_NO_STOP));
 
-    while (true)
-    {
-        ESP_LOGI(TAG, "Top of rotation loop");
-        for (int step = 0; step < 9; step++)
-        {
-            ESP_ERROR_CHECK(mcpwm_comparator_set_compare_value(comparator, step_through_duty_cycles(step)));
-            vTaskDelay(pdMS_TO_TICKS(500));
-        }
-    }
+    rotate_display(true);
 }
