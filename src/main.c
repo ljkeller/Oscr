@@ -1,5 +1,5 @@
 /*
- * Rotate a coin display continuously with mcpwm servo control
+ * Oscr main- rotate a coin display continuously with mcpwm servo control
  */
 
 #include "freertos/FreeRTOS.h"
@@ -21,11 +21,6 @@ static inline uint32_t middle_pulsewidth_us()
     return (SERVO_MIN_PULSEWIDTH_US + SERVO_MAX_PULSEWIDTH_US) / 2;
 }
 
-static inline uint32_t step_through_duty_cycles(int step)
-{
-    return SERVO_MIN_PULSEWIDTH_US + (SERVO_MAX_PULSEWIDTH_US - SERVO_MIN_PULSEWIDTH_US) * step / 8;
-}
-
 void rotate_display(mcpwm_cmpr_handle_t comparator, bool is_clockwise)
 {
     const uint32_t smooth_offset = 40;
@@ -41,7 +36,8 @@ void step_through_pwms_testing_helper(mcpwm_cmpr_handle_t comparator)
         ESP_LOGI(TAG, "Top of rotation loop");
         for (int step = 0; step < 30; step++)
         {
-            ESP_ERROR_CHECK(mcpwm_comparator_set_compare_value(comparator, middle_pulsewidth_us() + 80 / 3 * step));
+            const uint32_t rotation_magnitude = middle_pulsewidth_us() + 80 / 3 * step;
+            ESP_ERROR_CHECK(mcpwm_comparator_set_compare_value(comparator, rotation_magnitude));
             vTaskDelay(pdMS_TO_TICKS(3000));
         }
     }
