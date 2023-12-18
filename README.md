@@ -1,6 +1,11 @@
 # Oscr
 Open source coin rotator using ESP32
 
+![oscar_square](https://github.com/ljkeller/Oscr/assets/44109284/885d05ce-ff90-4b23-95bc-e70a4bd4e99b)
+
+
+
+
 ## Overview
 This repository contains the source code and design schematics for an open-source coin rotating display, Oscr, a fun ESP32 project designed to showcase coins in a dynamic manner. The 3d printed device is driven by an ESP32 microcontroller and controls a single FS90R continuous servo for rotation with the ESP-IDF Motor Control Pulse Width Modulator (MCPWM) API. All other components are designed and 3D printed using a [Bambu Lab X1C 3D printer](https://us.store.bambulab.com/products/x1-carbon-combo).
 
